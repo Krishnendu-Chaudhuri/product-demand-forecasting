@@ -51,9 +51,7 @@ Thumbs.db
 
 # ML artifacts
 artifacts/
-outputs/
 checkpoints/
-models/
 runs/
 mlruns/
 *.h5
@@ -65,9 +63,6 @@ mlruns/
 *.pickle
 *.pkl
 
-# Large local datasets
-assets/data.csv
-assets/*.csv
 
 # Optional extras generated content
 extras/outputs/
