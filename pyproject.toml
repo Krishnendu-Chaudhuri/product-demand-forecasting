@@ -64,6 +64,17 @@ src = ["src", "app", "tests"]
 [tool.ruff.lint]
 select = ["E", "F", "I", "W"]
 
+[tool.ruff.lint.isort]
+known-first-party = [
+    "app",
+    "config",
+    "data",
+    "features",
+    "models",
+    "pipelines",
+    "utils",
+]
+
 [tool.mypy]
 python_version = "3.11"
 packages = ["data", "features", "models", "pipelines", "config", "app"]

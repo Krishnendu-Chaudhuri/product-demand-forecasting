@@ -4,12 +4,12 @@ from __future__ import annotations
 
 import numpy as np
 import pandas as pd
-from app.api import main as api_main
-from app.api import rate_limit as rate_limit_module
-from app.api.main import app
 from fastapi.testclient import TestClient
 from sklearn.ensemble import RandomForestRegressor
 
+from app.api import main as api_main
+from app.api import rate_limit as rate_limit_module
+from app.api.main import app
 from models.registry import save_artifact
 
 PREDICT_PAYLOAD = {
