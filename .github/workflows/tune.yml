@@ -7,7 +7,21 @@ jobs:
   tune:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      # Fetch full history and Git LFS objects (CSV datasets may be LFS-tracked).
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+          fetch-depth: 0
+
+      - name: Verify Git LFS objects
+        run: |
+          git lfs install
+          git lfs pull
+          git lfs ls-files
+          if [ -z "$(git lfs ls-files)" ]; then
+            echo "No Git LFS tracked files in this repository."
+          fi
 
       - uses: actions/setup-python@v5
         with:

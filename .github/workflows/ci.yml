@@ -9,7 +9,21 @@ jobs:
   lint-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      # Fetch full history and Git LFS objects (CSV fixtures are LFS-tracked).
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+          fetch-depth: 0
+
+      - name: Verify Git LFS objects
+        run: |
+          git lfs install
+          git lfs pull
+          git lfs ls-files
+          if [ -z "$(git lfs ls-files)" ]; then
+            echo "No Git LFS tracked files in this repository."
+          fi
 
       - uses: actions/setup-python@v5
         with:
@@ -29,6 +43,30 @@ jobs:
       - name: pip-audit
         run: pip-audit -r requirements.txt --desc on
 
+      # Fail fast if any CSV under known data dirs is still an LFS pointer.
+      - name: Validate CSV files are not LFS pointers
+        run: |
+          set -euo pipefail
+          LFS_PREFIX="version https://git-lfs.github.com/spec/v1"
+          AFFECTED=()
+          for dir in data tests fixtures sample_data; do
+            [ -d "$dir" ] || continue
+            while IFS= read -r -d '' file; do
+              if head -c 80 "$file" | grep -q "^${LFS_PREFIX}"; then
+                AFFECTED+=("$file")
+              fi
+            done < <(find "$dir" -type f -name '*.csv' -print0)
+          done
+          if [ "${#AFFECTED[@]}" -gt 0 ]; then
+            echo "::error::Git LFS pointer file(s) detected — CSV content was not fetched:"
+            printf '  - %s\n' "${AFFECTED[@]}"
+            echo ""
+            echo "::warning::If LFS objects were never pushed to the remote, the maintainer must run:"
+            echo "  git lfs push origin --all"
+            exit 1
+          fi
+          echo "All CSV files under data/, tests/, fixtures/, sample_data/ contain real content."
+
       - name: Pytest
         run: pytest -q
 
@@ -40,7 +78,21 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@v4
+      # Fetch full history and Git LFS objects for consistency across CI jobs.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+          fetch-depth: 0
+
+      - name: Verify Git LFS objects
+        run: |
+          git lfs install
+          git lfs pull
+          git lfs ls-files
+          if [ -z "$(git lfs ls-files)" ]; then
+            echo "No Git LFS tracked files in this repository."
+          fi
 
       - name: Log in to GHCR
         uses: docker/login-action@v3
