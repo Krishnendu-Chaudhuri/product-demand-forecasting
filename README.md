@@ -287,6 +287,3 @@ mypy
 
 See [`requirements.txt`](requirements.txt) or install via `pip install -e ".[dev]"`.
 
-## License
-
-MIT — see [`LICENSE`](LICENSE).
