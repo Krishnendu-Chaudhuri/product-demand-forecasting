@@ -1,0 +1,16 @@
+assets/data.csv
+assets/*.csv
+.git
+notebooks/
+outputs/
+*.egg-info
+__pycache__
+.pytest_cache
+.mypy_cache
+.ruff_cache
+models/
+.venv/
+venv/
+dist/
+build/
+.DS_Store

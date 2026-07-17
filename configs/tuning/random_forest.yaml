@@ -1,0 +1,6 @@
+n_estimators: [50, 72, 94, 116, 138, 161, 183, 205, 227, 250]
+max_features: [sqrt, log2]
+max_depth: [10, 12, 14, 16]
+min_samples_split: [2, 5, 10]
+min_samples_leaf: [5, 8, 10]
+bootstrap: [true, false]

@@ -1,0 +1,10 @@
+version: v2
+lags: [1, 2, 3, 4]
+rolling_windows: []
+static_columns:
+  - total_price
+  - base_price
+  - is_featured_sku
+  - is_display_sku
+derived_features:
+  - price_diff

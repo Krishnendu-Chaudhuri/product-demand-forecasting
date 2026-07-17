@@ -1,0 +1,75 @@
+[build-system]
+requires = ["setuptools>=69.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "demand-forecast"
+version = "0.1.0"
+description = "Product-based demand forecasting pipeline"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy==2.2.6",
+    "pandas==2.2.3",
+    "scikit-learn==1.6.1",
+    "xgboost==2.1.4",
+    "pandera==0.22.1",
+    "pydantic==2.11.3",
+    "hydra-core==1.3.2",
+    "joblib==1.4.2",
+    "streamlit==1.54.0",
+    "matplotlib==3.10.1",
+    "pyyaml==6.0.2",
+    "omegaconf==2.3.0",
+    "fastapi==0.139.0",
+    "uvicorn[standard]==0.34.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==9.0.3",
+    "ruff==0.11.4",
+    "mypy==1.15.0",
+    "types-PyYAML==6.0.12.20250402",
+    "httpx==0.28.1",
+    "pip-audit==2.9.0",
+]
+cloud = [
+    "boto3==1.37.38",
+]
+onnx = [
+    "skl2onnx==1.18.0",
+    "onnx==1.17.0",
+    "onnxmltools==1.13.0",
+]
+
+[tool.setuptools.package-dir]
+"" = "src"
+"app" = "app"
+
+[tool.setuptools.packages.find]
+where = ["src", "."]
+include = ["data*", "features*", "models*", "pipelines*", "config*", "utils*", "app*"]
+namespaces = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "."]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+src = ["src", "app", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+
+[tool.mypy]
+python_version = "3.11"
+packages = ["data", "features", "models", "pipelines", "config", "app"]
+mypy_path = ["src", "."]
+explicit_package_bases = true
+ignore_missing_imports = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true

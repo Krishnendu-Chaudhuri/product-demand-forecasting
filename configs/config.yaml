@@ -1,0 +1,52 @@
+defaults:
+  - features: v2
+  - tuning@tuning.grid: random_forest
+  - _self_
+
+data:
+  path: assets/data.csv
+  granularity: store_sku  # store_sku | store_only
+
+split:
+  test_size_pct: 0.15
+  cutoff_date: null  # optional ISO date override, e.g. "2013-06-01"
+
+model:
+  type: random_forest  # random_forest | xgboost
+  random_state: 0
+  hyperparams:
+    random_forest:
+      n_estimators: 100
+      max_features: sqrt
+      max_depth: 14
+      min_samples_split: 2
+      min_samples_leaf: 8
+      bootstrap: true
+    xgboost:
+      n_estimators: 100
+      max_depth: 6
+      learning_rate: 0.1
+      subsample: 0.8
+      colsample_bytree: 0.8
+
+tuning:
+  enabled: false
+  n_iter: 10
+  cv: 3
+
+registry:
+  models_dir: models
+  keep_last_n: 5
+
+logging:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+ui:
+  auth_enabled: false
+  auth_password: null
+  users: {}
+
+security:
+  api_key: null
+  rate_limit_per_minute: 0
