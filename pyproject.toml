@@ -77,9 +77,10 @@ known-first-party = [
 
 [tool.mypy]
 python_version = "3.11"
-packages = ["data", "features", "models", "pipelines", "config", "app"]
+packages = ["data", "features", "models", "pipelines", "config", "utils", "app"]
 mypy_path = ["src", "."]
 explicit_package_bases = true
+plugins = ["pydantic.mypy"]
 ignore_missing_imports = true
 warn_return_any = true
 warn_unused_configs = true

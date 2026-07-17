@@ -264,7 +264,7 @@ Duplicate model versions are pruned automatically via `registry.keep_last_n` in 
 ```bash
 pytest -q
 ruff check src app tests
-mypy -p data -p features -p models -p pipelines -p config -p app
+mypy
 ```
 
 ## Migration (old → new paths)

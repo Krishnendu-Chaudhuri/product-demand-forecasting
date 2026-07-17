@@ -50,6 +50,9 @@ Thumbs.db
 .env
 
 # ML artifacts
+/models/
+/outputs/
+/assets/
 artifacts/
 checkpoints/
 runs/

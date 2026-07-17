@@ -24,7 +24,7 @@ jobs:
         run: ruff check src app tests
 
       - name: Mypy
-        run: mypy -p data -p features -p models -p pipelines -p config -p app
+        run: mypy
 
       - name: pip-audit
         run: pip-audit -r requirements.txt --desc on
